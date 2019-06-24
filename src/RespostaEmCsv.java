@@ -1,24 +1,20 @@
-import Investimentos.Conta;
-
-public class RespostaEmCsv implements Resposta {
-
-	private Resposta proxima;
-
-	public RespostaEmCsv(Resposta proxima) {
-		this.proxima = proxima;
-	}
-
-	@Override
+class RespostaEmCsv implements Resposta {
+	private Resposta outraResposta;
+	
+	 /* Exercicio passando a proxima resposta pelo construtor
+	 * public RespostaEmCsv(Resposta outraResposta) {
+        this.outraResposta = outraResposta;
+      }*/
+	
 	public void responde(Requisicao req, Conta conta) {
-		if (req.getFormato().equals(Formato.CSV)) {
-			StringBuilder sBuilder = new StringBuilder();
-			sBuilder.append(conta.getTitular());
-			sBuilder.append(",");
-			sBuilder.append(conta.getSaldo());
+		if (req.getFormato() == Formato.CSV) {
+			System.out.println(conta.getTitular() + "," + conta.getSaldo());
 		} else {
-			proxima.responde(req, conta);
+			outraResposta.responde(req, conta);
 		}
-
 	}
 
+	public void setProxima(Resposta resposta) {
+		this.outraResposta = resposta;
+	}
 }

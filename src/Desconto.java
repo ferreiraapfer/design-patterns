@@ -1,7 +1,5 @@
 
 public interface Desconto {
-
-	double calcula(Orcamento orcamento);
-	
+	double desconta(Orcamento orcamento);
 	void setProximo(Desconto desconto);
 }

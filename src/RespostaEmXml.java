@@ -1,29 +1,23 @@
-import Investimentos.Conta;
-
-public class RespostaEmXml implements Resposta {
-
-	private Resposta proxima;
-
-	public RespostaEmXml(Resposta proxima) {
-		this.proxima = proxima;
-	}
-
-	@Override
+class RespostaEmXml implements Resposta {
+	private Resposta outraResposta;
+	
+	 /* Exercicio passando a proxima resposta pelo construtor
+	  * public RespostaEmXml(Resposta outraResposta) {
+	        this.outraResposta = outraResposta;
+      }
+      */
+	
 	public void responde(Requisicao req, Conta conta) {
-		if (req.getFormato().equals(Formato.XML)) {
-			StringBuilder sBuilder = new StringBuilder();
-			sBuilder.append("<conta>");
-			sBuilder.append("<titular");
-			sBuilder.append(conta.getTitular());
-			sBuilder.append("</titular>");
-			sBuilder.append("<saldo>");
-			sBuilder.append(conta.getSaldo());
-			sBuilder.append("</saldo>");
-			sBuilder.append("</conta>");
+		if (req.getFormato() == Formato.XML) {
+			System.out.println("<conta><titular>" + conta.getTitular()
+					+ "</titular><saldo>" + conta.getSaldo()
+					+ "</saldo></conta>");
 		} else {
-			proxima.responde(req, conta);
+			outraResposta.responde(req, conta);
 		}
-
 	}
 
+	public void setProxima(Resposta resposta) {
+		this.outraResposta = resposta;
+	}
 }

@@ -1,4 +1,3 @@
-
-public enum Formato {
+enum Formato {
 	XML, CSV, PORCENTO
 }

@@ -1,7 +1,5 @@
-import Investimentos.Conta;
-
-public interface Resposta {
-
+interface Resposta {
 	void responde(Requisicao req, Conta conta);
-	
+
+	void setProxima(Resposta resposta);
 }

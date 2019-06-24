@@ -1,26 +1,18 @@
-
 public class ICCC extends Imposto {
 
-	public ICCC() {
+	public ICCC(Imposto outroImposto) {
+		super(outroImposto);
 	}
-
-	/**
-	 * Caso seja menor que 1000 -> 5% Caso seja entre 1000 e 3000 (inclusivo) -> 7%
-	 * Caso seja maior que 3000 -> 8% + 30 reais
-	 */
-	@Override
+	
+	public ICCC(){}
+	
 	public double calcula(Orcamento orcamento) {
-
 		if (orcamento.getValor() < 1000) {
-			return orcamento.getValor() * 0.05;
+			return orcamento.getValor() * 0.05 + calculoDoOutroImposto(orcamento);
+		} else if (orcamento.getValor() <= 3000) {
+			return orcamento.getValor() * 0.07 + calculoDoOutroImposto(orcamento);
+		} else {
+			return orcamento.getValor() * 0.08 + 30 + calculoDoOutroImposto(orcamento);
 		}
-
-		if (orcamento.getValor() <= 3000) {
-			return orcamento.getValor() * 0.07;
-		}
-
-		return (orcamento.getValor() * 0.08) + 30;
-
 	}
-
 }

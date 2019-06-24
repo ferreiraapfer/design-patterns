@@ -1,23 +1,25 @@
-import Investimentos.Conta;
+class RespostaEmPorcento implements Resposta {
+	private Resposta outraResposta;
 
-public class RespostaEmPorcento implements Resposta {
+	/*
+	 * Exercicio passando a proxima resposta pelo construtor public
+	 * RespostaEmPorcento(Resposta outraResposta) { this.outraResposta =
+	 * outraResposta; }
+	 */
 
-	private Resposta proxima;
-
-	public RespostaEmPorcento(Resposta proxima) {
-		this.proxima = proxima;
-	}
-
-	@Override
 	public void responde(Requisicao req, Conta conta) {
-		if (req.getFormato().equals(Formato.PORCENTO)) {
-			StringBuilder sBuilder = new StringBuilder();
-			sBuilder.append(conta.getTitular());
-			sBuilder.append("%");
-			sBuilder.append(conta.getSaldo());
+		if (req.getFormato() == Formato.PORCENTO) {
+			System.out.println(conta.getTitular() + '%' + conta.getSaldo());
+		} else if (outraResposta != null) {
+			outraResposta.responde(req, conta);
 		} else {
-			proxima.responde(req, conta);
+			// não existe próxima na corrente, e ninguém atendeu a requisição!
+			// poderíamos não ter feito nada aqui, caso não fosse necessário!
+			throw new RuntimeException("Formato de resposta não encontrado");
 		}
 	}
 
+	public void setProxima(Resposta resposta) {
+		this.outraResposta = resposta;
+	}
 }
